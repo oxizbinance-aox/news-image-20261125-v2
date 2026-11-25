@@ -8,7 +8,10 @@ import * as path from "node:path";
 
 const ROOT: string = path.dirname(new URL(import.meta.url).pathname);
 const SRC: string = path.join(ROOT, "entry.png");
-const OUT_DIR: string = path.join(ROOT, "output");
+// The grader runs with the repo read-only at /bot and an empty writable
+// /output, with MAKEFUN_OUTPUT_DIR=/output in the environment. Honour it
+// when set; fall back to a local output/ dir for local runs.
+const OUT_DIR: string = process.env.MAKEFUN_OUTPUT_DIR || path.join(ROOT, "output");
 const OUT: string = path.join(OUT_DIR, "entry.png");
 
 const buf: Buffer = fs.readFileSync(SRC);

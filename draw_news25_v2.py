@@ -68,23 +68,23 @@ MIDS = [
     dict(n=1, city="SANTA CLARA", region="AMERICAS", cat="BUSINESS",
          headline="Nvidia slides as Trump role questioned",
          deck="Shares fell 5.9% on Trump role questions. (Reuters)",
-         stat="-5.9%", claim="R", lat=37.35, lon=-121.95, scene="chip"),
+         stat="-5.9%", claim="R", lat=37.35, lon=-121.95, scene="chip", jx=2, jy=0),
     dict(n=3, city="CARTAGENA", region="AMERICAS", cat="SIEGE",
          headline="Hostages freed after supermarket siege",
          deck="Armed men held ~20; all freed unharmed. (Reuters/AP)",
-         stat="ALL FREED", claim="C", lat=10.39, lon=-75.51, scene="market"),
+         stat="ALL FREED", claim="C", lat=10.39, lon=-75.51, scene="market", jx=0, jy=1),
     dict(n=5, city="DAKAR", region="AFRICA", cat="SPORT",
          headline="Senegal get AFCON title back",
          deck="CAS restored Senegal as 2025 champions. (Reuters)",
-         stat="TITLE BACK", claim="C", lat=14.69, lon=-17.45, scene="trophy"),
+         stat="TITLE BACK", claim="C", lat=14.69, lon=-17.45, scene="trophy", jx=3, jy=0),
     dict(n=6, city="MADRID", region="EUROPE", cat="POLITICS",
          headline="Spain heads to snap election",
          deck="Sanchez and Feijoo clashed on housing. (Reuters)",
-         stat="29 NOV VOTE", claim="R", lat=40.42, lon=-3.70, scene="ballot"),
+         stat="29 NOV VOTE", claim="R", lat=40.42, lon=-3.70, scene="ballot", jx=0, jy=2),
     dict(n=7, city="SHANGHAI", region="ASIA", cat="POLITICS",
          headline="China probes Shanghai party chief",
          deck="Graft probe into Chen Jining, Politburo member. (Reuters)",
-         stat="PROBE", claim="R", lat=31.23, lon=121.47, scene="magnifier"),
+         stat="PROBE", claim="R", lat=31.23, lon=121.47, scene="magnifier", jx=-6, jy=0),
     dict(n=8, city="BOGOR", region="ASIA", cat="DISASTER",
          headline="Dozens trapped in flooded gold mine",
          deck="Dozens trapped 100m down in flooded mine. (Reuters)",
@@ -116,7 +116,7 @@ MIDS = [
 ]
 LEAD_PINS = [
     dict(n=4, lat=40.96, lon=100.28, region="ASIA"),
-    dict(n=14, lat=38.90, lon=-77.04, region="AMERICAS", jx=15, jy=-11),
+    dict(n=14, lat=38.90, lon=-77.04, region="AMERICAS", jx=-18, jy=1),
     dict(n=2, lat=26.50, lon=56.00, region="MIDDLE EAST"),
 ]
 
@@ -159,7 +159,7 @@ BRIEFS = [
     dict(n=33, city="MUMBAI", region="ASIA", headline="India's Sensex rises 1.8%",
          claim="C", source="Reuters", lat=19.08, lon=72.88),
     dict(n=34, city="CANBERRA", region="OCEANIA", headline="US envoy slams Australia digital law",
-         claim="R", source="Reuters", lat=-35.28, lon=149.13, jx=5, jy=3),
+         claim="R", source="Reuters", lat=-35.28, lon=149.13, jx=5, jy=-2),
     dict(n=35, city="SYDNEY", region="OCEANIA", headline="Australian inflation runs hot",
          claim="C", source="Reuters", lat=-33.87, lon=151.21),
     dict(n=36, city="MADRID", region="EUROPE", headline="Real Madrid thrash PSV 5-1",
@@ -288,6 +288,11 @@ JAVA = [(105,-6),(110,-7),(114,-7),(114,-9),(108,-8),(105,-7)]
 BORNEO = [(109,1),(113,4),(117,6),(119,1),(117,-3),(113,-3),(110,-2)]
 NEW_GUINEA = [(131,-1),(136,-2),(141,-3),(146,-6),(150,-9),(147,-9),(142,-8),
     (138,-8),(134,-4),(131,-2)]
+AUSTRALIA = [(114,-22),(114,-30),(115,-35),(118,-35),(124,-33),(129,-32),(132,-32),
+    (135,-35),(137,-35),(140,-38),(145,-38),(150,-37),(153,-32),(153,-27),(150,-23),
+    (146,-19),(142,-15),(142,-11),(137,-12),(135,-12),(132,-11),(130,-13),(126,-14),
+    (122,-17),(118,-20),(114,-22)]
+TASMANIA = [(145,-41),(148,-41),(148,-43),(145,-43)]
 NZ = [(167,-45),(170,-42),(173,-40),(175,-38),(177,-38),(174,-41),(171,-44),(168,-46)]
 ICELAND = [(-22,64),(-18,63),(-14,64),(-18,66),(-22,65)]
 GREENLAND = [(-55,60),(-50,60),(-45,60),(-40,64),(-32,68),(-25,70),(-20,74),
@@ -295,7 +300,7 @@ GREENLAND = [(-55,60),(-50,60),(-45,60),(-40,64),(-32,68),(-25,70),(-20,74),
 SRI_LANKA = [(80,9),(81,8),(80,6),(79,8)]
 TAIWAN = [(120,22),(121,23),(121,25),(120,24)]
 CONTINENTS = [N_AMERICA, S_AMERICA, AFRICA, MADAGASCAR, EURASIA, UK, JAPAN,
-              SUMATRA, JAVA, BORNEO, NEW_GUINEA, NZ, ICELAND, GREENLAND,
+              SUMATRA, JAVA, BORNEO, NEW_GUINEA, AUSTRALIA, TASMANIA, NZ, ICELAND, GREENLAND,
               SRI_LANKA, TAIWAN]
 
 MAP = dict(x0=8, y0=626, w=1008, h=128)
@@ -668,7 +673,7 @@ def draw_page():
     for L in LEAD_PINS:
         pins.append((L["n"], L["lat"], L["lon"], L["region"], L.get("jx", 0), L.get("jy", 0)))
     for M in MIDS:
-        pins.append((M["n"], M["lat"], M["lon"], M["region"], 0, 0))
+        pins.append((M["n"], M["lat"], M["lon"], M["region"], M.get("jx", 0), M.get("jy", 0)))
     print("PIN DEBUG TABLE (n, lat, lon -> x, y):")
     for n, lat, lon, reg, jx, jy in sorted(pins):
         px, py = project(lon, lat)
